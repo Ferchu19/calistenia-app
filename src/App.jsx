@@ -3,6 +3,8 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import NewWorkout from './pages/NewWorkout'
+import Exercises from './pages/Exercises'
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -18,6 +20,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/workout/new" element={<PrivateRoute><NewWorkout /></PrivateRoute>} />
+           <Route path="/exercises" element={<PrivateRoute><Exercises /></PrivateRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       </BrowserRouter>
