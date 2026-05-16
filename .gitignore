@@ -1,24 +1,58 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
 
-node_modules
-dist
-dist-ssr
+# Entorno virtual
+venv/
+.venv/
+env/
+ENV/
+
+# Variables de entorno — NUNCA subir
+.env
+.env.*
+*.env
+
+# ========================
+# Node / Frontend
+# ========================
+node_modules/
+dist/
+build/
+.cache/
 *.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# ========================
+# VS Code
+# ========================
+.vscode/
+*.code-workspace
+
+# ========================
+# Sistema operativo
+# ========================
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+desktop.ini
+
+# ========================
+# Logs
+# ========================
+*.log
+logs/
+
+# ========================
+# Base de datos local
+# ========================
+*.db
+*.sqlite
+*.sqlite3
