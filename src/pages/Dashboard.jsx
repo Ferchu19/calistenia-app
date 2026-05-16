@@ -90,15 +90,21 @@ export default function Dashboard() {
         </div>
 
         {/* Accesos rápidos */}
-        <div className="grid grid-cols-2 gap-3">
-          <a href="/workout/new" className="bg-primary text-white rounded-2xl p-4 text-center">
+        <div className="grid grid-cols-3 gap-3">
+        <a href="/workout/new" className="bg-primary text-white rounded-2xl p-4 text-center col-span-2">
             <p className="text-2xl mb-1">💪</p>
             <p className="text-sm font-medium">Registrar entrenamiento</p>
-          </a>
-          <a href="/exercises" className="bg-white border border-gray-100 rounded-2xl p-4 text-center">
-            <p className="text-2xl mb-1">📋</p>
-            <p className="text-sm font-medium text-gray-700">Ver ejercicios</p>
-          </a>
+        </a>
+        <div className="flex flex-col gap-3">
+            <a href="/exercises" className="bg-white border border-gray-100 rounded-2xl p-3 text-center flex-1">
+            <p className="text-xl">📋</p>
+            <p className="text-xs text-gray-700 mt-1">Ejercicios</p>
+            </a>
+            <a href="/profile" className="bg-white border border-gray-100 rounded-2xl p-3 text-center flex-1">
+            <p className="text-xl">👤</p>
+            <p className="text-xs text-gray-700 mt-1">Perfil</p>
+            </a>
+        </div>
         </div>
       </div>
     </div>
