@@ -1,0 +1,26 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Variables de entorno (NUNCA subir esto)
+.env
+*.env
+
+# Base de datos local
+*.db
+*.sqlite
+
+# VS Code
+.vscode/
+
+# Node (para el frontend más adelante)
+node_modules/
+dist/
+build/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
