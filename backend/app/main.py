@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth, profiles, exercises
+from app.routers import auth, profiles, exercises, plans
 
 app = FastAPI(
     title="Calistenia App API",
@@ -20,6 +20,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(profiles.router)
 app.include_router(exercises.router)
+app.include_router(plans.router)
 
 @app.get("/")
 def root():
