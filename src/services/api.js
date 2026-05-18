@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://18.216.172.241',
+  baseURL: 'https://calistenia-app.duckdns.org',
 })
 
 // Agregar token automáticamente a cada request
