@@ -6,6 +6,7 @@ export default function Register() {
   const [form, setForm] = useState({ email: '', password: '', role: 'athlete' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -14,12 +15,27 @@ export default function Register() {
     setError('')
     try {
       await register(form.email, form.password, form.role)
-      navigate('/login')
+      setSuccess(true)
+      setTimeout(() => navigate('/login'), 2500)
     } catch (err) {
       setError(err.response?.data?.detail || 'Error al registrarse')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 w-full max-w-md text-center">
+          <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+            <span className="text-4xl">✓</span>
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">¡Cuenta creada!</h2>
+          <p className="text-gray-500 text-sm">Te estamos redirigiendo al login...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
