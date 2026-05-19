@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react'
 import { getExercises } from '../services/api'
 
 const categoryColors = {
-  push: 'bg-blue-50 text-blue-600',
-  pull: 'bg-purple-50 text-purple-600',
-  core: 'bg-yellow-50 text-yellow-600',
-  legs: 'bg-green-50 text-green-600',
-  skill: 'bg-red-50 text-red-600',
+  'Jalón': 'bg-purple-50 text-purple-600',
+  'Empuje': 'bg-blue-50 text-blue-600',
+  'Core': 'bg-yellow-50 text-yellow-600',
+  'Piernas': 'bg-green-50 text-green-600',
+  'Skill': 'bg-red-50 text-red-600',
 }
 
 const difficultyColors = {
-  beginner: 'bg-green-50 text-green-600',
-  intermediate: 'bg-yellow-50 text-yellow-600',
-  advanced: 'bg-red-50 text-red-600',
+  'Principiante': 'bg-green-50 text-green-600',
+  'Intermedio': 'bg-yellow-50 text-yellow-600',
+  'Avanzado': 'bg-red-50 text-red-600',
 }
 
 export default function Exercises() {
