@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import NewWorkout from './pages/NewWorkout'
 import Exercises from './pages/Exercises'
 import Profile from './pages/Profile'
+import NewExercise from './pages/NewExercise'
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/workout/new" element={<PrivateRoute><NewWorkout /></PrivateRoute>} />
            <Route path="/exercises" element={<PrivateRoute><Exercises /></PrivateRoute>} />
+           <Route path="/exercises/new" element={<PrivateRoute><NewExercise /></PrivateRoute>} />
            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>

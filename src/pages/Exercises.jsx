@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getExercises } from '../services/api'
+import { useAuth } from '../context/AuthContext'
 
 const categoryColors = {
   'Jalón': 'bg-purple-50 text-purple-600',
@@ -20,6 +21,8 @@ export default function Exercises() {
   const [filtered, setFiltered] = useState([])
   const [category, setCategory] = useState('all')
   const [loading, setLoading] = useState(true)
+
+  const { user } = useAuth()
 
   useEffect(() => {
     getExercises()
@@ -46,6 +49,9 @@ export default function Exercises() {
         <div className="max-w-2xl mx-auto flex items-center gap-3">
           <a href="/dashboard" className="text-gray-400 hover:text-gray-600">←</a>
           <h1 className="text-lg font-bold text-gray-900">Ejercicios</h1>
+          {user?.role === 'coach' && (
+           <a href="/exercises/new" className="ml-auto text-xs text-primary font-medium">+ Nuevo</a>
+          )}
         </div>
       </div>
 
