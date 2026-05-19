@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import api from '../services/api'
 
 export default function NewExercise() {
@@ -30,35 +29,37 @@ export default function NewExercise() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-100 px-4 py-4">
-        <div className="max-w-2xl mx-auto flex items-center gap-3">
-          <a href="/exercises" className="text-gray-400 hover:text-gray-600">←</a>
-          <h1 className="text-lg font-bold text-gray-900">Nuevo ejercicio</h1>
+    <div className="min-h-screen" style={{backgroundColor: 'var(--bg-primary)'}}>
+
+      {/* Header */}
+      <div style={{backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)'}}>
+        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-3">
+          <a href="/exercises" style={{color: 'var(--text-secondary)', fontSize: '20px'}}>←</a>
+          <h1 className="text-lg font-bold" style={{color: 'var(--text-primary)'}}>Nuevo ejercicio</h1>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-4 space-y-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 space-y-3">
+        <div className="card space-y-4">
 
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Nombre</label>
+            <label className="label">Nombre</label>
             <input
               type="text"
               value={form.name}
               onChange={e => setForm({...form, name: e.target.value})}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="input"
               placeholder="Ej: Muscle-up"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Categoría</label>
+            <label className="label">Categoría</label>
             <select
               value={form.category}
               onChange={e => setForm({...form, category: e.target.value})}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="input"
             >
               <option value="Jalón">Jalón</option>
               <option value="Empuje">Empuje</option>
@@ -68,11 +69,11 @@ export default function NewExercise() {
           </div>
 
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Dificultad</label>
+            <label className="label">Dificultad</label>
             <select
               value={form.difficulty}
               onChange={e => setForm({...form, difficulty: e.target.value})}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="input"
             >
               <option value="Principiante">Principiante</option>
               <option value="Intermedio">Intermedio</option>
@@ -81,35 +82,35 @@ export default function NewExercise() {
           </div>
 
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Descripción</label>
+            <label className="label">Descripción</label>
             <textarea
               value={form.description}
               onChange={e => setForm({...form, description: e.target.value})}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="input"
               placeholder="Descripción del ejercicio..."
               rows={3}
+              style={{resize: 'none'}}
             />
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 py-2" style={{borderTop: '1px solid var(--border)'}}>
             <input
               type="checkbox"
               id="is_skill"
               checked={form.is_skill}
               onChange={e => setForm({...form, is_skill: e.target.checked})}
-              className="w-4 h-4 accent-primary"
+              className="w-4 h-4"
+              style={{accentColor: 'var(--accent)'}}
             />
-            <label htmlFor="is_skill" className="text-sm text-gray-700">⭐ Es un skill (muscle-up, front lever, etc.)</label>
+            <label htmlFor="is_skill" className="text-sm" style={{color: 'var(--text-primary)'}}>
+              Es un skill <span style={{color: 'var(--text-secondary)'}}>(muscle-up, front lever, etc.)</span>
+            </label>
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && <p className="text-sm" style={{color: 'var(--danger)'}}>{error}</p>}
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-primary text-white rounded-2xl py-4 text-sm font-medium hover:bg-opacity-90 transition disabled:opacity-50"
-        >
+        <button type="submit" disabled={loading} className="btn-primary">
           {loading ? 'Guardando...' : '+ Crear ejercicio'}
         </button>
       </form>

@@ -65,140 +65,153 @@ export default function Profile() {
   }
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-gray-400">Cargando...</p>
+    <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--bg-primary)'}}>
+      <p style={{color: 'var(--text-secondary)'}}>Cargando...</p>
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-100 px-4 py-4">
-        <div className="max-w-2xl mx-auto flex items-center gap-3">
-          <a href="/dashboard" className="text-gray-400 hover:text-gray-600">←</a>
-          <h1 className="text-lg font-bold text-gray-900">Mi perfil</h1>
+    <div className="min-h-screen" style={{backgroundColor: 'var(--bg-primary)'}}>
+
+      {/* Header */}
+      <div style={{backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)'}}>
+        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-3">
+          <a href="/dashboard" style={{color: 'var(--text-secondary)', fontSize: '20px'}}>←</a>
+          <h1 className="text-lg font-bold" style={{color: 'var(--text-primary)'}}>Mi perfil</h1>
         </div>
       </div>
 
       <div className="max-w-2xl mx-auto p-4 space-y-4">
+
         {!editing && profile ? (
           <>
-            {/* Vista del perfil */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-6">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold">
-                  {profile.full_name?.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900">{profile.full_name}</h2>
-                  <p className="text-sm text-gray-500">@{profile.username}</p>
-                  <span className="text-xs bg-purple-50 text-primary px-2 py-0.5 rounded-full">
-                    {levelLabels[profile.experience_level]}
-                  </span>
-                </div>
+            {/* Avatar y nombre */}
+            <div className="card flex items-center gap-4">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0"
+                style={{backgroundColor: 'var(--accent-subtle)', color: 'var(--accent)', border: '1px solid var(--accent)'}}>
+                {profile.full_name?.charAt(0).toUpperCase()}
               </div>
-
-              {profile.bio && (
-                <p className="text-sm text-gray-600 mb-4">{profile.bio}</p>
-              )}
-
-              <div className="grid grid-cols-2 gap-3">
-                {profile.weight_kg && (
-                  <div className="bg-gray-50 rounded-xl p-3">
-                    <p className="text-xs text-gray-500">Peso</p>
-                    <p className="text-lg font-bold text-gray-900">{profile.weight_kg} <span className="text-sm font-normal">kg</span></p>
-                  </div>
-                )}
-                {profile.height_cm && (
-                  <div className="bg-gray-50 rounded-xl p-3">
-                    <p className="text-xs text-gray-500">Altura</p>
-                    <p className="text-lg font-bold text-gray-900">{profile.height_cm} <span className="text-sm font-normal">cm</span></p>
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <p className="text-xs text-gray-500">Email: {user?.email}</p>
-                <p className="text-xs text-gray-500">Rol: {user?.role}</p>
+              <div>
+                <h2 className="text-lg font-bold" style={{color: 'var(--text-primary)'}}>{profile.full_name}</h2>
+                <p className="text-sm" style={{color: 'var(--text-secondary)'}}>@{profile.username}</p>
+                <span className="badge-green mt-1 inline-block">
+                  {levelLabels[profile.experience_level]}
+                </span>
               </div>
             </div>
 
-            <button
-              onClick={() => setEditing(true)}
-              className="w-full bg-white border border-gray-200 text-gray-700 rounded-2xl py-3 text-sm font-medium hover:bg-gray-50 transition"
-            >
-              ✏️ Editar perfil
+            {/* Bio */}
+            {profile.bio && (
+              <div className="card">
+                <p className="text-xs mb-1" style={{color: 'var(--text-secondary)'}}>Bio</p>
+                <p className="text-sm" style={{color: 'var(--text-primary)'}}>{profile.bio}</p>
+              </div>
+            )}
+
+            {/* Métricas físicas */}
+            <div className="grid grid-cols-2 gap-3">
+              {profile.weight_kg && (
+                <div className="card">
+                  <p className="text-xs mb-1" style={{color: 'var(--text-secondary)'}}>Peso</p>
+                  <p className="text-2xl font-bold" style={{color: 'var(--text-primary)'}}>
+                    {profile.weight_kg} <span className="text-sm font-normal" style={{color: 'var(--text-secondary)'}}>kg</span>
+                  </p>
+                </div>
+              )}
+              {profile.height_cm && (
+                <div className="card">
+                  <p className="text-xs mb-1" style={{color: 'var(--text-secondary)'}}>Altura</p>
+                  <p className="text-2xl font-bold" style={{color: 'var(--text-primary)'}}>
+                    {profile.height_cm} <span className="text-sm font-normal" style={{color: 'var(--text-secondary)'}}>cm</span>
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Info cuenta */}
+            <div className="card space-y-2">
+              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>
+                Email: <span style={{color: 'var(--text-primary)'}}>{user?.email}</span>
+              </p>
+              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>
+                Rol: <span style={{color: 'var(--text-primary)'}}>{user?.role === 'coach' ? 'Coach' : 'Atleta'}</span>
+              </p>
+            </div>
+
+            <button onClick={() => setEditing(true)} className="btn-secondary">
+              Editar perfil
             </button>
           </>
         ) : (
-          /* Formulario de edición/creación */
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-4 space-y-3">
-            <h2 className="text-sm font-semibold text-gray-900 mb-2">
+          <form onSubmit={handleSubmit} className="card space-y-4">
+            <p className="text-sm font-medium" style={{color: 'var(--text-primary)'}}>
               {profile ? 'Editar perfil' : 'Completá tu perfil'}
-            </h2>
+            </p>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Nombre completo</label>
+              <label className="label">Nombre completo</label>
               <input
                 type="text"
                 value={form.full_name}
                 onChange={e => setForm({...form, full_name: e.target.value})}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="input"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Username</label>
+              <label className="label">Username</label>
               <input
                 type="text"
                 value={form.username}
                 onChange={e => setForm({...form, username: e.target.value})}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="input"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Bio</label>
+              <label className="label">Bio</label>
               <textarea
                 value={form.bio}
                 onChange={e => setForm({...form, bio: e.target.value})}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="input"
                 rows={2}
                 placeholder="Contá algo sobre vos..."
+                style={{resize: 'none'}}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Peso (kg)</label>
+                <label className="label">Peso (kg)</label>
                 <input
                   type="number"
                   step="0.1"
                   value={form.weight_kg}
                   onChange={e => setForm({...form, weight_kg: e.target.value})}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="input"
                   placeholder="70"
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Altura (cm)</label>
+                <label className="label">Altura (cm)</label>
                 <input
                   type="number"
                   value={form.height_cm}
                   onChange={e => setForm({...form, height_cm: e.target.value})}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="input"
                   placeholder="175"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Nivel</label>
+              <label className="label">Nivel</label>
               <select
                 value={form.experience_level}
                 onChange={e => setForm({...form, experience_level: e.target.value})}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="input"
               >
                 <option value="beginner">Principiante</option>
                 <option value="intermediate">Intermedio</option>
@@ -211,16 +224,12 @@ export default function Profile() {
                 <button
                   type="button"
                   onClick={() => setEditing(false)}
-                  className="flex-1 bg-gray-100 text-gray-600 rounded-xl py-3 text-sm font-medium"
+                  className="btn-secondary"
                 >
                   Cancelar
                 </button>
               )}
-              <button
-                type="submit"
-                disabled={saving}
-                className="flex-1 bg-primary text-white rounded-xl py-3 text-sm font-medium disabled:opacity-50"
-              >
+              <button type="submit" disabled={saving} className="btn-primary">
                 {saving ? 'Guardando...' : 'Guardar'}
               </button>
             </div>
