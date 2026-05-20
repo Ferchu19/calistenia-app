@@ -133,11 +133,16 @@ export default function Dashboard() {
             </div>
           </a>
           <div className="flex flex-col gap-3">
-            <a href="/exercises" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
-              style={{textDecoration: 'none'}}>
-              <span className="text-xl mb-1">📋</span>
-              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Ejercicios</p>
-            </a>
+             <a href="/exercises" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
+               style={{textDecoration: 'none'}}>
+               <span className="text-xl mb-1">📋</span>
+               <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Ejercicios</p>
+             </a>
+             <a href="/progress" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
+                style={{textDecoration: 'none'}}>
+               <span className="text-xl mb-1">📈</span>
+               <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Progreso</p>
+             </a>
             <a href="/profile" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
               style={{textDecoration: 'none'}}>
               <span className="text-xl mb-1">👤</span>
