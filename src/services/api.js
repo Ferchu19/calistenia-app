@@ -41,3 +41,9 @@ export const getStats = () => api.get('/workouts/stats')
 export const getRecords = () => api.get('/workouts/records')
 
 export default api
+
+// Coach
+export const getAthletes = () => api.get('/auth/athletes')
+export const assignPlan = (planId, athleteUserId) =>
+  api.post(`/plans/${planId}/assign`, { athlete_user_id: athleteUserId })
+export const getMyPlans = () => api.get('/plans/my-plans')

@@ -8,6 +8,7 @@ import Exercises from './pages/Exercises'
 import Profile from './pages/Profile'
 import NewExercise from './pages/NewExercise'
 import Progress from './pages/Progress'
+import CoachPanel from './pages/CoachPanel'
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -28,6 +29,7 @@ function App() {
            <Route path="/exercises/new" element={<PrivateRoute><NewExercise /></PrivateRoute>} />
            <Route path="/progress" element={<PrivateRoute><Progress /></PrivateRoute>} />
            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+           <Route path="/coach" element={<PrivateRoute><CoachPanel /></PrivateRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       </BrowserRouter>

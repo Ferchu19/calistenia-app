@@ -150,6 +150,19 @@ export default function Dashboard() {
             </a>
           </div>
         </div>
+        {user?.role === 'coach' && (
+          <a href="/coach" className="card flex items-center gap-3 hover:opacity-80 transition"
+            style={{textDecoration: 'none', borderColor: 'var(--accent)'}}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{backgroundColor: 'var(--accent-subtle)'}}>
+              <span>🏋️</span>
+            </div>
+            <div>
+              <p className="text-sm font-medium" style={{color: 'var(--text-primary)'}}>Panel del coach</p>
+              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Gestionar atletas</p>
+            </div>
+          </a>
+        )}
       </div>
     </div>
   )

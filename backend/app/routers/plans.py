@@ -186,3 +186,13 @@ def assign_plan(plan_id: int, data: AssignPlanRequest, current_user: User = Depe
     db.add(assignment)
     db.commit()
     return {"message": f"Plan asignado correctamente al atleta {data.athlete_user_id}"}
+
+@router.get("/athlete/{athlete_id}", response_model=List[PlanResponse])
+def get_athlete_plans(athlete_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role not in ["coach", "admin"]:
+        raise HTTPException(status_code=403, detail="Solo coaches pueden ver planes de atletas")
+    return db.query(Plan).join(AthletePlan).filter(AthletePlan.user_id == athlete_id).all()
+
+@router.get("/my-plans", response_model=List[PlanResponse])
+def get_my_plans(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return db.query(Plan).join(AthletePlan).filter(AthletePlan.user_id == current_user.id).all()

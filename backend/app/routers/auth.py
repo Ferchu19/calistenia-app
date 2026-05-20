@@ -10,6 +10,15 @@ router = APIRouter(prefix="/auth", tags=["Autenticación"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
+def get_current_user_from_token(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    user = db.query(User).filter(User.id == int(payload["sub"])).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return user
+
 @router.post("/register", response_model=UserResponse, status_code=201)
 def register(user_data: UserCreate, db: Session = Depends(get_db)):
     # Verificar si el email ya existe
@@ -54,3 +63,9 @@ def login_form(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
         raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
     token = create_access_token({"sub": str(user.id), "role": user.role})
     return {"access_token": token, "token_type": "bearer"}
+
+@router.get("/athletes", tags=["Usuarios"])
+def get_athletes(current_user: User = Depends(get_current_user_from_token), db: Session = Depends(get_db)):
+    if current_user.role not in ["coach", "admin"]:
+        raise HTTPException(status_code=403, detail="Solo coaches pueden ver atletas")
+    return db.query(User).filter(User.role == "athlete").all()
