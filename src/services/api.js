@@ -47,3 +47,4 @@ export const getAthletes = () => api.get('/auth/athletes')
 export const assignPlan = (planId, athleteUserId) =>
   api.post(`/plans/${planId}/assign`, { athlete_user_id: athleteUserId })
 export const getMyPlans = () => api.get('/plans/my-plans')
+export const getMyAssignedPlans = () => api.get('/plans/my-plans')

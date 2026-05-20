@@ -158,6 +158,10 @@ def get_plans(current_user: User = Depends(get_current_user), db: Session = Depe
         return db.query(Plan).filter(Plan.created_by == current_user.id).all()
     return db.query(Plan).join(AthletePlan).filter(AthletePlan.user_id == current_user.id).all()
 
+@router.get("/my-plans", response_model=List[PlanResponse])
+def get_my_plans(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return db.query(Plan).join(AthletePlan).filter(AthletePlan.user_id == current_user.id).all()
+
 @router.get("/{plan_id}", response_model=PlanResponse)
 def get_plan(plan_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     plan = db.query(Plan).filter(Plan.id == plan_id).first()
@@ -193,6 +197,3 @@ def get_athlete_plans(athlete_id: int, current_user: User = Depends(get_current_
         raise HTTPException(status_code=403, detail="Solo coaches pueden ver planes de atletas")
     return db.query(Plan).join(AthletePlan).filter(AthletePlan.user_id == athlete_id).all()
 
-@router.get("/my-plans", response_model=List[PlanResponse])
-def get_my_plans(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    return db.query(Plan).join(AthletePlan).filter(AthletePlan.user_id == current_user.id).all()

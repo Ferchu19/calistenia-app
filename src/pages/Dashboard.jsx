@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getStats, getMySessions } from '../services/api'
+import { getStats, getMySessions, getMyAssignedPlans } from '../services/api'
 import { useAuth } from '../context/AuthContext'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
@@ -7,13 +7,15 @@ export default function Dashboard() {
   const { user, logoutUser } = useAuth()
   const [stats, setStats] = useState(null)
   const [sessions, setSessions] = useState([])
+  const [assignedPlans, setAssignedPlans] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([getStats(), getMySessions()])
-      .then(([statsRes, sessionsRes]) => {
+    Promise.all([getStats(), getMySessions(), getMyAssignedPlans()])
+      .then(([statsRes, sessionsRes, plansRes]) => {
         setStats(statsRes.data)
         setSessions(sessionsRes.data.slice(0, 5))
+        setAssignedPlans(plansRes.data)
       })
       .finally(() => setLoading(false))
   }, [])
@@ -24,7 +26,7 @@ export default function Dashboard() {
     duracion: s.duration_minutes ?? 0
   })).reverse()
 
-  if (loading) return (
+  if (loading || !user) return (
     <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--bg-primary)'}}>
       <p style={{color: 'var(--text-secondary)'}}>Cargando...</p>
     </div>
@@ -65,6 +67,25 @@ export default function Dashboard() {
             <p className="text-4xl font-bold" style={{color: 'var(--text-primary)'}}>{stats?.total_sets ?? 0}</p>
           </div>
         </div>
+
+        {/* Plan asignado */}
+        {assignedPlans.length > 0 && (
+          <div className="card">
+            <p className="text-sm font-medium mb-3" style={{color: 'var(--text-primary)'}}>Mi plan actual</p>
+            {assignedPlans.map(plan => (
+              <div key={plan.id} className="flex items-center justify-between py-2"
+                style={{borderBottom: '1px solid var(--border)'}}>
+                <div>
+                  <p className="text-sm font-medium" style={{color: 'var(--text-primary)'}}>{plan.name}</p>
+                  <p className="text-xs mt-0.5" style={{color: 'var(--text-secondary)'}}>
+                    {plan.difficulty} · {plan.duration_weeks} semanas
+                  </p>
+                </div>
+                <span className="badge-green">Activo</span>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Gráfico */}
         {sessions.length > 0 && (
@@ -133,16 +154,16 @@ export default function Dashboard() {
             </div>
           </a>
           <div className="flex flex-col gap-3">
-             <a href="/exercises" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
-               style={{textDecoration: 'none'}}>
-               <span className="text-xl mb-1">📋</span>
-               <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Ejercicios</p>
-             </a>
-             <a href="/progress" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
-                style={{textDecoration: 'none'}}>
-               <span className="text-xl mb-1">📈</span>
-               <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Progreso</p>
-             </a>
+            <a href="/exercises" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
+              style={{textDecoration: 'none'}}>
+              <span className="text-xl mb-1">📋</span>
+              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Ejercicios</p>
+            </a>
+            <a href="/progress" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
+              style={{textDecoration: 'none'}}>
+              <span className="text-xl mb-1">📈</span>
+              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Progreso</p>
+            </a>
             <a href="/profile" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
               style={{textDecoration: 'none'}}>
               <span className="text-xl mb-1">👤</span>
@@ -150,6 +171,7 @@ export default function Dashboard() {
             </a>
           </div>
         </div>
+
         {user?.role === 'coach' && (
           <a href="/coach" className="card flex items-center gap-3 hover:opacity-80 transition"
             style={{textDecoration: 'none', borderColor: 'var(--accent)'}}>
