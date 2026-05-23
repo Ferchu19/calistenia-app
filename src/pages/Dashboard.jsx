@@ -127,7 +127,7 @@ export default function Dashboard() {
                   style={{borderBottom: '1px solid var(--border)'}}>
                   <div>
                     <p className="text-sm font-medium" style={{color: 'var(--text-primary)'}}>
-                      Sesión #{session.id}
+                      {session.notes?.startsWith('Circuito') ? '⏱️ Circuito' : '💪 Entrenamiento'}
                     </p>
                     <p className="text-xs mt-0.5" style={{color: 'var(--text-secondary)'}}>
                       {session.duration_minutes ? `${session.duration_minutes} min` : 'Sin duración'} · {session.sets?.length ?? 0} series
@@ -168,6 +168,11 @@ export default function Dashboard() {
               style={{textDecoration: 'none'}}>
               <span className="text-xl mb-1">👤</span>
               <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Perfil</p>
+            </a>
+            <a href="/circuit" className="card flex flex-col items-center justify-center py-3 hover:opacity-80 transition"
+              style={{textDecoration: 'none'}}>
+              <span className="text-xl mb-1">⏱️</span>
+              <p className="text-xs" style={{color: 'var(--text-secondary)'}}>Circuito</p>
             </a>
           </div>
         </div>

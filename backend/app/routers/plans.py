@@ -167,6 +167,19 @@ def get_plan(plan_id: int, current_user: User = Depends(get_current_user), db: S
     plan = db.query(Plan).filter(Plan.id == plan_id).first()
     if not plan:
         raise HTTPException(status_code=404, detail="Plan no encontrado")
+    
+    # Verificar que el plan pertenece al coach o está asignado al atleta
+    if current_user.role == 'coach':
+        if plan.created_by != current_user.id:
+            raise HTTPException(status_code=403, detail="No tenés acceso a este plan")
+    else:
+        assigned = db.query(AthletePlan).filter(
+            AthletePlan.plan_id == plan_id,
+            AthletePlan.user_id == current_user.id
+        ).first()
+        if not assigned:
+            raise HTTPException(status_code=403, detail="No tenés acceso a este plan")
+    
     return plan
 
 @router.post("/{plan_id}/assign")

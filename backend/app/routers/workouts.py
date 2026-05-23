@@ -130,7 +130,10 @@ def create_session(data: WorkoutSessionCreate, current_user: User = Depends(get_
 
 @router.get("/", response_model=List[WorkoutSessionResponse])
 def get_my_sessions(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    sessions = db.query(WorkoutSession).filter(WorkoutSession.user_id == current_user.id).order_by(WorkoutSession.created_at.desc()).all()
+    # Solo devuelve sesiones del usuario autenticado
+    sessions = db.query(WorkoutSession).filter(
+        WorkoutSession.user_id == current_user.id
+    ).order_by(WorkoutSession.created_at.desc()).all()
     for s in sessions:
         s.sets = db.query(SessionSet).filter(SessionSet.session_id == s.id).all()
     return sessions

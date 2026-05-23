@@ -96,8 +96,13 @@ def update_profile(data: ProfileCreate, current_user: User = Depends(get_current
     return profile
 
 @router.get("/{username}", response_model=ProfileResponse)
-def get_profile_by_username(username: str, db: Session = Depends(get_db)):
+def get_profile_by_username(username: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     profile = db.query(Profile).filter(Profile.username == username).first()
     if not profile:
         raise HTTPException(status_code=404, detail="Perfil no encontrado")
+    
+    # Solo el propio usuario o un coach puede ver el perfil
+    if profile.user_id != current_user.id and current_user.role not in ["coach", "admin"]:
+        raise HTTPException(status_code=403, detail="No tenés acceso a este perfil")
+    
     return profile

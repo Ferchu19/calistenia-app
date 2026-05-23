@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import NewExercise from './pages/NewExercise'
 import Progress from './pages/Progress'
 import CoachPanel from './pages/CoachPanel'
+import Circuit from './pages/Circuit'
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -30,6 +31,7 @@ function App() {
            <Route path="/progress" element={<PrivateRoute><Progress /></PrivateRoute>} />
            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
            <Route path="/coach" element={<PrivateRoute><CoachPanel /></PrivateRoute>} />
+           <Route path="/circuit" element={<PrivateRoute><Circuit /></PrivateRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       </BrowserRouter>

@@ -66,6 +66,7 @@ def login_form(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
 
 @router.get("/athletes", tags=["Usuarios"])
 def get_athletes(current_user: User = Depends(get_current_user_from_token), db: Session = Depends(get_db)):
+    # Solo coaches y admins pueden ver la lista de atletas
     if current_user.role not in ["coach", "admin"]:
-        raise HTTPException(status_code=403, detail="Solo coaches pueden ver atletas")
+        raise HTTPException(status_code=403, detail="No tenés permisos para ver esta información")
     return db.query(User).filter(User.role == "athlete").all()
