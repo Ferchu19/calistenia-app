@@ -175,7 +175,7 @@ export default function NewWorkout() {
                   />
                 </div>
                 <div>
-                  <label className="label">Segundos</label>
+                  <label className="label">Duración en segundos (holds)</label>
                   <input
                     type="number"
                     value={set.duration_seconds}
